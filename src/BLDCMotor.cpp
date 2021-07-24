@@ -223,16 +223,19 @@ int BLDCMotor::absoluteZeroSearch() {
   float limit_vel = velocity_limit;
   float limit_volt = voltage_limit;
   velocity_limit = velocity_index_search;
-  voltage_limit = voltage_sensor_align;
+  voltage_limit = 0.5;//voltage_sensor_align;
   shaft_angle = 0;
   while(sensor->needsSearch() && shaft_angle < _2PI){
     angleOpenloop(1.5*_2PI);
+
+    zero_search_active = true;
     // call important for some sensors not to loose count
     // not needed for the search
     sensor->getAngle();
   }
   // disable motor
   setPhaseVoltage(0, 0, 0);
+  zero_search_active = false;
   // reinit the limits
   velocity_limit = limit_vel;
   voltage_limit = limit_volt;
@@ -614,7 +617,7 @@ float BLDCMotor::angleOpenloop(float target_angle){
 
   // use voltage limit or current limit
   float Uq = voltage_limit;
-  if(_isset(phase_resistance)) Uq =  current_limit*phase_resistance;
+  if(_isset(phase_resistance) && !zero_search_active) Uq =  current_limit*phase_resistance;
   // set the maximal allowed voltage (voltage_limit) with the necessary angle
   setPhaseVoltage(Uq,  0, _electricalAngle(shaft_angle, pole_pairs));
 

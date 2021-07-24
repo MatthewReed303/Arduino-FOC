@@ -87,7 +87,7 @@ class BLDCMotor: public FOCMotor
     int alignCurrentSense();
     /** Motor and sensor alignment to the sensors absolute 0 angle  */
     int absoluteZeroSearch();
-
+    bool zero_search_active;
         
     // Open loop motion control    
     /**
