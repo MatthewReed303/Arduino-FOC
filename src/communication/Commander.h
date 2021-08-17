@@ -203,16 +203,16 @@ class Commander
      *  @param newline - if needs lewline (1) otherwise (0)
      */
 
-    void print(const float number);
-    void print(const int number);
-    void print(const char* message);
-    void print(const __FlashStringHelper *message);
-    void print(const char message);
-    void println(const float number);
-    void println(const int number);
-    void println(const char* message);
-    void println(const __FlashStringHelper *message);
-    void println(const char message);
+    virtual void print(const float number);
+    virtual void print(const int number);
+    virtual void print(const char* message);
+    virtual void print(const __FlashStringHelper *message);
+    virtual void print(const char message);
+    virtual void println(const float number);
+    virtual void println(const int number);
+    virtual void println(const char* message);
+    virtual void println(const __FlashStringHelper *message);
+    virtual void println(const char message);
 
     void printError();
     bool isSentinel(char ch);
